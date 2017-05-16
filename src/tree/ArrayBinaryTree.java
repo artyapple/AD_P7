@@ -1,18 +1,16 @@
 package tree;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import node.ArrayTreeNode;
-import node.Data;
 import node.INode;
-import node.LinkedTreeNode;
 
 public class ArrayBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
 
-	private ArrayTreeNode[] abt = new ArrayTreeNode[100];
-	// private int index;
 	private static final int ROOT_INDEX = 1;
+	private static final int SIZE = 20;
+	private ArrayTreeNode[] abt = new ArrayTreeNode[SIZE];
 
 	@Override
 	public <T> void add(INode node) {
@@ -35,6 +33,10 @@ public class ArrayBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
 				parent = focusNode;
 				// Check if the new node should go on
 				// the left side of the parent node
+				if (abt.length - 1 < focusNode * 2 + 1) {
+					increaseSize(focusNode * 2 + 1);
+				}
+
 				if (nd.getData().compareTo(abt[focusNode].getData()) < 0) {
 					// Switch focus to the left child
 					focusNode = focusNode * 2;
@@ -94,7 +96,7 @@ public class ArrayBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
 	 * @return node
 	 */
 	private INode getLeft(int index) {
-		return abt[(2 * index)];
+		return getNode(2 * index);
 	}
 
 	/**
@@ -104,7 +106,31 @@ public class ArrayBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
 	 * @return node
 	 */
 	private INode getRight(int index) {
-		return abt[(2 * index + 1)];
+		return getNode(2 * index + 1);
+	}
+	
+	/**
+	 * get node by array index
+	 * 
+	 * @param index
+	 * @return
+	 */
+	private INode getNode(int index){
+		if(abt.length-1<index){
+			return null;
+		} else{
+			return abt[index];
+		}
+	}
+
+	/**
+	 * increase Array size
+	 * 
+	 * @param incr
+	 */
+	private void increaseSize(int incr) {
+		ArrayTreeNode newArray[] = Arrays.copyOf(abt, abt.length + incr);
+		abt = newArray;
 	}
 
 	/**

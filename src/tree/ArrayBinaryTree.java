@@ -12,20 +12,20 @@ public class ArrayBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
 
 	private ArrayTreeNode[] abt = new ArrayTreeNode[100];
 	// private int index;
-	private int root_Index = 1;
+	private static final int ROOT_INDEX = 1;
 
 	@Override
 	public <T> void add(INode node) {
 
 		ArrayTreeNode nd = (ArrayTreeNode) node;
 
-		if (abt[root_Index] == null) {
-			nd.setIndex(root_Index);
-			abt[root_Index] = nd;
+		if (abt[ROOT_INDEX] == null) {
+			nd.setIndex(ROOT_INDEX);
+			abt[ROOT_INDEX] = nd;
 		} else {
 			// Set root as the Node we will start
 			// with as we traverse the tree
-			int focusNode = root_Index;
+			int focusNode = ROOT_INDEX;
 			// Future parent for our new Node
 			int parent;
 

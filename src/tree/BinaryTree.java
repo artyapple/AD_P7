@@ -1,5 +1,6 @@
 package tree;
 import node.INode;
+import node.LinkedTreeNode;
 
 public interface BinaryTree <T extends Comparable<T>> {
 	

@@ -6,102 +6,147 @@ import java.util.List;
 import node.ArrayTreeNode;
 import node.Data;
 import node.INode;
+import node.LinkedTreeNode;
 
-public class ArrayBinaryTree<T extends Comparable<T>> extends BinaryTreeAbstract<T> {
+public class ArrayBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
 
-	static ArrayTreeNode[] abt= new ArrayTreeNode[100];
-	private int index;
-
-	public INode getNode(int index) {
-		return abt[index];
-	}
+	private ArrayTreeNode[] abt = new ArrayTreeNode[100];
+	// private int index;
+	private int root_Index = 1;
 
 	@Override
 	public <T> void add(INode node) {
-		
-		index = 1;
-		if (abt[index] == null) {
 
-			abt[index] = (ArrayTreeNode) node;
+		ArrayTreeNode nd = (ArrayTreeNode) node;
 
+		if (abt[root_Index] == null) {
+			nd.setIndex(root_Index);
+			abt[root_Index] = nd;
 		} else {
-
 			// Set root as the Node we will start
 			// with as we traverse the tree
-
-			ArrayTreeNode focusNode = abt[index];
-
+			int focusNode = root_Index;
 			// Future parent for our new Node
-
-			ArrayTreeNode parent;
+			int parent;
 
 			while (true) {
-
 				// root is the top parent so we start
 				// there
-
 				parent = focusNode;
-
 				// Check if the new node should go on
 				// the left side of the parent node
-				if(node.getData().compareTo(focusNode.getData()) < 0){
-				while (node.getData().compareTo(focusNode.getData()) < 0) {
-					index = index * 2;
+				if (nd.getData().compareTo(abt[focusNode].getData()) < 0) {
 					// Switch focus to the left child
-					focusNode = abt[index];
+					focusNode = focusNode * 2;
 					// If the left child has no children
-					if (focusNode == null) {
+					if (abt[focusNode] == null) {
 						// then place the new node on the left of it
-						
-						abt[index] = (ArrayTreeNode) node;
-						abt[index].setIndex(index);
+						nd.setIndex(focusNode);
+						abt[focusNode] = nd;
 						return; // All Done
 					}
-				}
-
-				}
-				else{
-				while (node.getData().compareTo(focusNode.getData()) > 0) {
-					// If we get here put the node on the right
-					index = index * 2 + 1;
-					focusNode = abt[index];
-
+				} else { // If we get here put the node on the right
+					focusNode = focusNode * 2 + 1;
 					// If the right child has no children
-
-					if (focusNode == null) {
+					if (abt[focusNode] == null) {
 
 						// then place the new node on the right of it
-						
-						abt[index] = (ArrayTreeNode) node;
-						abt[index].setIndex(index);
+						nd.setIndex(focusNode);
+						abt[focusNode] = nd;
 						return; // All Done
-
 					}
 				}
-
-				
-				}
 			}
+		}
+	}
+
+	@Override
+	public <T> void inOrderTraverseTree(INode node) {
+		if (node != null) {
+			inOrderTraverseTree(getLeft(((ArrayTreeNode) node).getIndex()));
+			System.out.println(node.getData());
+			inOrderTraverseTree(getRight(((ArrayTreeNode) node).getIndex()));
+		}
+	}
+
+	@Override
+	public <T> void preOrderTraverseTree(INode node) {
+		if (node != null) {
+			System.out.println(node.getData());
+			preOrderTraverseTree(getLeft(((ArrayTreeNode) node).getIndex()));
+			preOrderTraverseTree(getRight(((ArrayTreeNode) node).getIndex()));
+		}
+	}
+
+	@Override
+	public <T> void postOrderTraverseTree(INode node) {
+		if (node != null) {
+			postOrderTraverseTree(getLeft(((ArrayTreeNode) node).getIndex()));
+			postOrderTraverseTree(getRight(((ArrayTreeNode) node).getIndex()));
+			System.out.println(node.getData());
+		}
+	}
+
+	/**
+	 * gets left child of node from array
+	 * 
+	 * @param index
+	 * @return node
+	 */
+	private INode getLeft(int index) {
+		return abt[(2 * index)];
+	}
+
+	/**
+	 * gets right child of node from array
+	 * 
+	 * @param index
+	 * @return node
+	 */
+	private INode getRight(int index) {
+		return abt[(2 * index + 1)];
+	}
+
+	/**
+	 * only for test
+	 * 
+	 * @param node
+	 * @param list
+	 */
+	public void inOrderTraverseTree(INode node, List<T> list) {
+		if (node != null) {
+			inOrderTraverseTree(getLeft(((ArrayTreeNode) node).getIndex()), list);
+			list.add((T) node.getData().getValue());
+			inOrderTraverseTree(getRight(((ArrayTreeNode) node).getIndex()), list);
+		}
+	}
+
+	/**
+	 * only for test
+	 * 
+	 * @param node
+	 * @param list
+	 */
+	public void preOrderTraverseTree(INode node, List<T> list) {
+		if (node != null) {
+			list.add((T) node.getData().getValue());
+			preOrderTraverseTree(getLeft(((ArrayTreeNode) node).getIndex()), list);
+			preOrderTraverseTree(getRight(((ArrayTreeNode) node).getIndex()), list);
 
 		}
 	}
-	public static void main(String[]args){
-		
-		int[] TEST_DATA = {7, 2, 5, 8, 1, 4, 3, 9, 10, 6};
-		ArrayBinaryTree<Integer> abt;
-		
-	
-		ArrayTreeNode<Integer> rootArr;
-		List<Integer> result = new ArrayList<>();
-		abt = new ArrayBinaryTree<>();
-		
-		rootArr = new ArrayTreeNode<>(new Data<>(new Integer(TEST_DATA[0])));
-	
-		abt.add(rootArr);
-		for(int i = 1;i<TEST_DATA.length ; i++){
-			abt.add(new ArrayTreeNode<>(new Data<>(new Integer(TEST_DATA[i]))));
+
+	/**
+	 * only for test
+	 * 
+	 * @param node
+	 * @param list
+	 */
+	public <T> void postOrderTraverseTree(INode node, List<T> list) {
+		if (node != null) {
+			postOrderTraverseTree(getLeft(((ArrayTreeNode) node).getIndex()), list);
+			postOrderTraverseTree(getRight(((ArrayTreeNode) node).getIndex()), list);
+			list.add((T) node.getData().getValue());
 		}
-	
 	}
-		
 }

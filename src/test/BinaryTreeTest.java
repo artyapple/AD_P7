@@ -2,6 +2,7 @@ package test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,6 +15,8 @@ import tree.ArrayBinaryTree;
 import tree.LinkedBinaryTree;
 
 public class BinaryTreeTest {
+	
+	private static Logger log = Logger.getLogger(BinaryTreeTest.class.getName());
 	
 	private static final int[] TEST_DATA = {7, 2, 5, 8, 1, 4, 3, 9, 10, 6};
 	private static final int[] IN_ORDER = {1,2,3,4,5,6,7,8,9,10};
@@ -44,7 +47,7 @@ public class BinaryTreeTest {
 	
 	@Test
 	public void testArrayBinaryTree() {
-		
+		log.info("Array Binary Tree test");
 		abt.inOrderTraverseTree(rootArr, result);
 		checkResult(result, IN_ORDER);
 		abt.preOrderTraverseTree(rootArr, result);
@@ -55,6 +58,7 @@ public class BinaryTreeTest {
 	
 	@Test
 	public void testLinkedBinaryTree() {
+		log.info("Linked Binary Tree test");
 		lbt.inOrderTraverseTree(rootLink, result);
 		checkResult(result, IN_ORDER);
 		lbt.preOrderTraverseTree(rootLink, result);
@@ -65,10 +69,13 @@ public class BinaryTreeTest {
 	
 	private void checkResult(List<Integer>actualRes, int[] expectedRes){
 		int j = 0;
+		StringBuilder str = new StringBuilder();
 		for(Integer i : actualRes){
 			Assert.assertEquals(expectedRes[j], i.intValue());
-			j++;
-		}		
+			str.append(expectedRes[j]+" ");
+			j++;			
+		}
+		log.info(str.toString());
 		actualRes.clear();
 	}
 

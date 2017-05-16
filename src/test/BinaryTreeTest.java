@@ -39,15 +39,17 @@ public class BinaryTreeTest {
 			lbt.add(new LinkedTreeNode<>(new Data<>(new Integer(TEST_DATA[i]))));
 			abt.add(new ArrayTreeNode<>(new Data<>(new Integer(TEST_DATA[i]))));
 		}
+		
 	}
 	
 	@Test
 	public void testArrayBinaryTree() {
-		abt.inOrderTraverseTree(rootLink, result);
+		
+		abt.inOrderTraverseTree(rootArr, result);
 		checkResult(result, IN_ORDER);
-		abt.preOrderTraverseTree(rootLink, result);
+		abt.preOrderTraverseTree(rootArr, result);
 		checkResult(result, PRE_ORDER);
-		abt.postOrderTraverseTree(rootLink, result);
+		abt.postOrderTraverseTree(rootArr, result);
 		checkResult(result, POST_ORDER);
 	}
 	

@@ -1,7 +1,11 @@
 package node;
+import tree.ArrayBinaryTree;
 public class ArrayTreeNode<T extends Comparable<T>> implements INode {
 	
 	private Data<T> data;
+	private int index;
+
+	
 	
 	public ArrayTreeNode(Data data) {
 		this.data = data;
@@ -9,8 +13,9 @@ public class ArrayTreeNode<T extends Comparable<T>> implements INode {
 
 	@Override
 	public INode getLeftChild() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		
+		return abt[1];
 	}
 
 	@Override
@@ -33,8 +38,10 @@ public class ArrayTreeNode<T extends Comparable<T>> implements INode {
 
 	@Override
 	public Data getData() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.data;
+	}
+	public void setIndex(int index){
+		this.index=index;
 	}
 	
 }

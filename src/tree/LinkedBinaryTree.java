@@ -30,6 +30,8 @@ public class LinkedBinaryTree<T extends Comparable<T>> implements BinaryTree<T> 
 				// Check if the new node should go on
 				// the left side of the parent node
 				if (node.getData().compareTo(focusNode.getData()) < 0) {
+
+					focusNode.setLeftSubTreeSum((Integer) node.getData().getValue());
 					// Switch focus to the left child
 					focusNode = (LinkedTreeNode) focusNode.getLeftChild();
 					// If the left child has no children
@@ -41,6 +43,7 @@ public class LinkedBinaryTree<T extends Comparable<T>> implements BinaryTree<T> 
 
 				} else { // If we get here put the node on the right
 
+					focusNode.setRightSubTreeSum((Integer) node.getData().getValue());
 					focusNode = (LinkedTreeNode) focusNode.getRightChild();
 					// If the right child has no children
 					if (focusNode == null) {
@@ -51,6 +54,29 @@ public class LinkedBinaryTree<T extends Comparable<T>> implements BinaryTree<T> 
 				}
 			}
 		}
+	}
+
+	public int getSumAllValues(int from, int until) {
+		return getSumUntilLastElement(from, root) - getSumUntilLastElement(until, root);
+	}
+
+	public int getSumUntilLastElement(int value, INode inode) {
+		LinkedTreeNode node = (LinkedTreeNode) inode;
+		int sum = 0;
+
+		if (node != null) {
+			int nodeVal = (Integer) node.getData().getValue();
+			if (nodeVal == value) {
+				sum = nodeVal + node.getRightSubTreeSum();
+			} else if(nodeVal > value){
+				sum = nodeVal + node.getRightSubTreeSum();
+				sum += getSumUntilLastElement(value, node.getLeftChild());
+			} else if(nodeVal < value){
+				sum = getSumUntilLastElement(value, node.getRightChild());
+			}
+		}
+
+		return sum;
 	}
 
 	@Override

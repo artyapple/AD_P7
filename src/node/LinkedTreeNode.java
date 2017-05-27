@@ -1,14 +1,13 @@
 package node;
 
-public class LinkedTreeNode<T extends Comparable<T>> implements INode {
+public class LinkedTreeNode<T extends Comparable<T>> extends AbstractTreeNode {
 
-	private Data<T> data;
+	public LinkedTreeNode(Data data) {
+		super(data);
+	}
+
 	private LinkedTreeNode<T> left;
 	private LinkedTreeNode<T> right;
-
-	public LinkedTreeNode(Data<T> data) {
-		this.data = data;
-	}
 
 	/**
 	 * gets left child node
@@ -46,8 +45,4 @@ public class LinkedTreeNode<T extends Comparable<T>> implements INode {
 		this.right = (LinkedTreeNode<T>) node;
 	}
 
-	@Override
-	public Data getData() {
-		return data;
-	}
 }

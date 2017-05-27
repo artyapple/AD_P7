@@ -38,6 +38,7 @@ public class ArrayBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
 				}
 
 				if (nd.getData().compareTo(abt[focusNode].getData()) < 0) {
+					abt[focusNode].setLeftSubTreeSum((Integer)node.getData().getValue());
 					// Switch focus to the left child
 					focusNode = focusNode * 2;
 					// If the left child has no children
@@ -48,6 +49,7 @@ public class ArrayBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
 						return; // All Done
 					}
 				} else { // If we get here put the node on the right
+					abt[focusNode].setRightSubTreeSum((Integer)node.getData().getValue());
 					focusNode = focusNode * 2 + 1;
 					// If the right child has no children
 					if (abt[focusNode] == null) {
@@ -60,6 +62,30 @@ public class ArrayBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
 				}
 			}
 		}
+	}
+	
+	public int getSumAllValues(int from, int until) {
+		return getSumUntilLastElement(from, abt[1]) - getSumUntilLastElement(until, abt[1]);
+	}
+
+	private int getSumUntilLastElement(int value, INode inode) {
+		ArrayTreeNode node = (ArrayTreeNode) inode;
+		int sum = 0;
+		
+		if (node != null) {
+			int nodeVal = (Integer) node.getData().getValue();
+			if (nodeVal == value) {
+				sum = nodeVal + node.getRightSubTreeSum();
+			} else if(nodeVal > value){
+				sum = nodeVal + node.getRightSubTreeSum();
+				sum += getSumUntilLastElement(value, getLeft(node.getIndex()));
+			} else if(nodeVal < value){
+				sum = getSumUntilLastElement(value, getRight(node.getIndex()));
+			}
+		}
+
+		System.out.println("SUM: "+sum);
+		return sum;
 	}
 
 	@Override

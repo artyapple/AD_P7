@@ -11,6 +11,15 @@ public interface BinaryTree <T extends Comparable<T>> {
 	public <T> void add(INode node);
 	
 	/**
+	 * gets sum of all values between "from" and "until"
+	 *  
+	 * @param from
+	 * @param until
+	 * @return
+	 */
+	public int getSumAllValues(int from, int until);
+	
+	/**
 	 * prints data in order 
 	 * @param node
 	 */

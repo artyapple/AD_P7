@@ -1,20 +1,14 @@
 package node;
 import tree.ArrayBinaryTree;
 
-public class ArrayTreeNode<T extends Comparable<T>> implements INode {
+public class ArrayTreeNode<T extends Comparable<T>> extends AbstractTreeNode {
 	
-	private Data<T> data;
 	private int index;
 	
 	public ArrayTreeNode(Data data) {
-		this.data = data;
+		super(data);
 	}
-
-	@Override
-	public Data getData() {
-		return data;
-	}
-
+	
 	
 	/**
 	 * sets node index in array 
@@ -32,6 +26,5 @@ public class ArrayTreeNode<T extends Comparable<T>> implements INode {
 	 */
 	public int getIndex(){
 		return index;
-	}
-	
+	}	
 }

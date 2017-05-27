@@ -7,4 +7,12 @@ public interface INode<T extends Comparable<T>> {
 	 * @return
 	 */
 	public Data<T> getData();
+	
+	public int getLeftSubTreeSum();
+	
+	public int getRightSubTreeSum();
+	
+	public void setLeftSubTreeSum(int value);
+	
+	public void setRightSubTreeSum(int value);
 }

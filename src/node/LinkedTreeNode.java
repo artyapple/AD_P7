@@ -2,6 +2,7 @@ package node;
 
 public class LinkedTreeNode<T extends Comparable<T>> extends AbstractTreeNode {
 
+	@SuppressWarnings("unchecked")
 	public LinkedTreeNode(Data data) {
 		super(data);
 	}

@@ -13,7 +13,7 @@ public abstract class AbstractTreeNode<T extends Comparable<T>> implements INode
 	}
 	
 	@Override
-	public Data getData() {
+	public Data<T> getData() {
 		return data;
 	}
 	

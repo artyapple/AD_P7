@@ -55,6 +55,9 @@ public class BinaryTreeTest {
 		abt.postOrderTraverseTree(rootArr, result);
 		checkResult(result, POST_ORDER);
 		Assert.assertEquals(42, abt.getSumAllValues(3, 9));
+		Assert.assertEquals(55, abt.getSumAllValues(0, 100));
+		Assert.assertEquals(11, abt.getSumAllValues(5, 6));
+		Assert.assertEquals(3, abt.getSumAllValues(3, 3));
 	}
 	
 	@Test
@@ -67,6 +70,9 @@ public class BinaryTreeTest {
 		lbt.postOrderTraverseTree(rootLink, result);
 		checkResult(result, POST_ORDER);
 		Assert.assertEquals(42, abt.getSumAllValues(3, 9));
+		Assert.assertEquals(55, abt.getSumAllValues(0, 100));
+		Assert.assertEquals(11, abt.getSumAllValues(5, 6));
+		Assert.assertEquals(3, abt.getSumAllValues(3, 3));
 	}
 	
 	private void checkResult(List<Integer>actualRes, int[] expectedRes){

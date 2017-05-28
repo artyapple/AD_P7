@@ -64,23 +64,41 @@ public class ArrayBinaryTree<T extends Comparable<T>> implements BinaryTree<T> {
 		}
 	}
 	
+	@Override
 	public int getSumAllValues(int from, int until) {
-		return getSumUntilLastElement(from, abt[1]) - getSumUntilLastElement(until, abt[1]);
+		if(from>until){
+			throw new IllegalArgumentException("wrong argument");
+		}
+		return getSumUntilLastElement(from, abt[ROOT_INDEX], LE) - getSumUntilLastElement(until, abt[ROOT_INDEX], GE);
 	}
-
-	private int getSumUntilLastElement(int value, INode inode) {
+	
+	/**
+	 * calculate sub sum
+	 * 
+	 * @param value
+	 * @param inode
+	 * @param type
+	 * @return sum
+	 */
+	@SuppressWarnings("rawtypes")
+	private int getSumUntilLastElement(int value, INode inode, int type) {
 		ArrayTreeNode node = (ArrayTreeNode) inode;
 		int sum = 0;
 		
 		if (node != null) {
+			
 			int nodeVal = (Integer) node.getData().getValue();
 			if (nodeVal == value) {
-				sum = nodeVal + node.getRightSubTreeSum();
+				if(type == LE){
+					sum = nodeVal + node.getRightSubTreeSum();
+				} else {
+					sum = node.getRightSubTreeSum();
+				}				
 			} else if(nodeVal > value){
 				sum = nodeVal + node.getRightSubTreeSum();
-				sum += getSumUntilLastElement(value, getLeft(node.getIndex()));
+				sum += getSumUntilLastElement(value, getLeft(node.getIndex()), type);
 			} else if(nodeVal < value){
-				sum = getSumUntilLastElement(value, getRight(node.getIndex()));
+				sum = getSumUntilLastElement(value, getRight(node.getIndex()), type);
 			}
 		}
 
